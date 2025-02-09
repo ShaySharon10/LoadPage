@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קהילת בינה מלאכותית - לומדים חכם יותר</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    :root {
+        --primary-color: #00ff88;
+        --secondary-color: #1a1a2e;
+        --accent-color: #4d4dff;
+        --background-color: #0a0a1f;
+        --card-background: #1a1a2e;
+        --text-color: #ffffff;
+        --neon-glow: 0 0 10px rgba(0, 255, 136, 0.5),
+                     0 0 20px rgba(0, 255, 136, 0.3),
+                     0 0 30px rgba(0, 255, 136, 0.1);
+        --neon-blue-glow: 0 0 10px rgba(77, 77, 255, 0.5),
+                         0 0 20px rgba(77, 77, 255, 0.3),
+                         0 0 30px rgba(77, 77, 255, 0.1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        background-image: 
+            radial-gradient(circle at 20% 20%, rgba(77, 77, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+        background: linear-gradient(135deg, var(--secondary-color), #000033);
+        color: var(--text-color);
+        padding: 2rem 0;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            linear-gradient(45deg, transparent 48%, var(--primary-color) 49%, transparent 51%),
+            linear-gradient(-45deg, transparent 48%, var(--primary-color) 49%, transparent 51%);
+        background-size: 60px 60px;
+        opacity: 0.1;
+        animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+        from { background-position: 0 0; }
+        to { background-position: 60px 60px; }
+    }
+
+    .hero {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        animation: fadeInUp 1s ease-out;
+        text-shadow: var(--neon-glow);
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        color: #b3b3ff;
+    }
+
+    /* Button Styles */
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        color: var(--background-color);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        text-shadow: none;
+        box-shadow: var(--neon-glow);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: var(--neon-blue-glow);
+        background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+    }
+
+    /* Sections */
+    section {
+        padding: 4rem 0;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: var(--primary-color);
+        text-shadow: var(--neon-glow);
+    }
+
+    /* Cards */
+    .step-card, .feature-card, .testimonial-card {
+        background: var(--card-background);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(77, 77, 255, 0.2);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+    }
+
+    .step-card:hover, .feature-card:hover, .testimonial-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-color);
+        box-shadow: var(--neon-glow);
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--background-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-weight: bold;
+        box-shadow: var(--neon-glow);
+    }
+
+    /* Features */
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        text-shadow: var(--neon-glow);
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        margin-top: 1rem;
+        overflow: hidden;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        width: 0;
+        transition: width 1s ease;
+        box-shadow: var(--neon-glow);
+    }
+
+    /* Contact Form */
+    .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background: var(--card-background);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(77, 77, 255, 0.2);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(77, 77, 255, 0.2);
+        border-radius: 5px;
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: var(--neon-glow);
+    }
+
+    .submit-button {
+        background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        color: var(--background-color);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: var(--neon-glow);
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--neon-blue-glow);
+    }
+
+    /* Footer */
+    footer {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        padding: 2rem 0;
+        margin-top: 4rem;
+        border-top: 1px solid var(--primary-color);
+    }
+
+    .social-links a {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        margin: 0 1rem;
+        text-shadow: var(--neon-glow);
+    }
+
+    .social-links a:hover {
+        color: var(--accent-color);
+        text-shadow: var(--neon-blue-glow);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes glowPulse {
+        0% { box-shadow: var(--neon-glow); }
+        50% { box-shadow: var(--neon-blue-glow); }
+        100% { box-shadow: var(--neon-glow); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="container hero">
+            <h1>תפתחו את הראש! ללמוד חכם יותר ומהר יותר עם בינה מלאכותית</h1>
+            <h2>לא צריך לבזבז זמן על קורסים משעממים. קבלו עזרה אישית, פידבק ישר ולעניין, וטיפים מבינה מלאכותית שיעזרו לכם להתקדם</h2>
+            <a href="#contact" class="cta-button">מתחילים ניסיון בחינם</a>
+        </div>
+    </header>
+
+    <section id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">איך זה עובד?</h2>
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>בודקים מה אתם יודעים</h3>
+                    <p>הבינה המלאכותית שלנו תבדוק מה רמת הידע שלכם עכשיו, מה מעניין אתכם ואיך אתם הכי אוהבים ללמוד</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 33%"></div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>בונים לכם תוכנית אישית</h3>
+                    <p>תקבלו תוכנית לימודים עם כל הדברים הכי טובים ומועילים לכם</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 66%"></div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>הבינה המלאכותית עוזרת כל הזמן</h3>
+                    <p>תקבלו פידבק תוך כדי תנועה, תוכלו לראות כמה התקדמתם ולשנות את התוכנית אם צריך</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">מה אפשר לעשות עם זה?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-robot feature-icon"></i>
+                    <h3>בינה מלאכותית בונה לכם את תוכנית הלימודים</h3>
+                    <p>תוכנית מותאמת אישית שמתעדכנת לפי ההתקדמות שלכם</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-hands-helping feature-icon"></i>
+                    <h3>מקבלים עזרה ותמיכה שמתאימה בדיוק לכם</h3>
+                    <p>תמיכה אישית וזמינה 24/7 עם משוב מיידי</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h3>רואים בדיוק איפה אתם עומדים ומה קורה</h3>
+                    <p>מעקב מתקדם אחר ההתקדמות שלכם עם נתונים בזמן אמת</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="container">
+            <h2 class="section-title">מה אנשים אומרים</h2>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"התוכנית הזו שינתה לי את החיים! אני לומד פי שניים יותר מהר ממה שחשבתי שאפשר."</p>
+                    <p class="testimonial-author">- דני כהן, מפתח תוכנה</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"הבינה המלאכותית הזו פשוט מדהימה. היא מתאימה את עצמה אליי ומאפשרת לי ללמוד בצורה שהיא רק שלי."</p>
+                    <p class="testimonial-author">- מיכל לוי, יזמת</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">צרו קשר</h2>
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="user_name">שם</label>
+                    <input type="text" id="user_name" name="user_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="user_email">אימייל</label>
+                    <input type="email" id="user_email" name="user_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">הודעה</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">שלחו לנו הודעה</button>
+            </form>
+        </div>
+    </section>
+
+   <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <div class="footer-text">
+                <p>© 2025 כל הזכויות שמורות לקהילת בינה מלאכותית - שי שרון </p>
+                <p><a href="#" style="color: white;">מדיניות פרטיות</a> | <a href="#" style="color: white;">תנאי שימוש</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+                publicKey: "yFLwANfzl0y2solMk",
+            });
+        })();
+
+        // Handle form submission
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                user_name: this.user_name.value,
+                user_email: this.user_email.value,
+                message: this.message.value,
+                to_name: "Shay", // השם שיופיע במייל
+            };
+
+            
+        });
+
+        // Animate progress bars on scroll
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar-fill');
+            progressBars.forEach(bar => {
+                const position = bar.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(position < screenPosition) {
+                    bar.style.width = bar.parentElement.getAttribute('data-progress') || '100%';
+                }
+            });
+        }
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Handle scroll animations
+        window.addEventListener('scroll', function() {
+            animateProgressBars();
+            
+            // Add fade-in effect for cards
+            const cards = document.querySelectorAll('.step-card, .feature-card, .testimonial-card');
+            cards.forEach(card => {
+                const position = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(position < screenPosition) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize animations on page load
+        window.addEventListener('load', function() {
+            animateProgressBars();
+            
+            // Set initial state for cards
+            const cards = document.querySelectorAll('.step-card, .feature-card, .testimonial-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // Trigger initial animation
+            setTimeout(() => {
+                cards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+            }, 200);
+        });
+    </script>
+</body>
+</html>
